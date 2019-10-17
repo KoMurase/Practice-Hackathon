@@ -3,10 +3,11 @@ import datetime
 
 #PORT NUMBER
 PORT = 50000
+BUFSIZE = 4096
 
 #メイン
 #ソケットの作成
-server = socket.socket(socket.AF_INET6,socket.SOCK_STREAM)
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 #アドレスの設定
 server.bind(('',PORT))
@@ -16,9 +17,13 @@ server.listen()
 
 #クライアントの対応処理
 while True:
-    client , addr = server.accept()
+    client , addr = server.accept() #通信用ソケットの取得
     msg = str(datetime.datetime.now())
-    client.sendall(msg.encode('UTF-8'))
-    print(msg,'接続要求アリ\n')
+    print(msg,'接続要求アリ')
     print(client)
+
+    data = client.recv(BUFSIZE)
+    print(data.decode('UTF-8'))
+
+    client.sendall(msg.encode('utf-8'))
     client.close()
