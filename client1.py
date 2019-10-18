@@ -5,6 +5,8 @@ PORT = 50000
 BUFSIZE = 4096
 
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+#socket.AF_INET6 でIPv6を
+#socket.SOCK_STREAMでTCP通信を指定している
 
 #サーバとの通信
 host = input('接続先のサーバ:')
