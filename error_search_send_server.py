@@ -7,15 +7,31 @@ BEFORE_SIZE = './BEFORE_SIZE.txt'
 import socket
 import sys
 
-#HOST = "localhost"
-HOST = #太一のPC
+HOST = '34.84.0.43'
 PORT = 50000
 BUFSIZE = 4096 #受信バッファの大きさ
 client = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
 
-f = open(ERROR_FILE,'rt')
-b = open(BEFORE_SIZE,'rt')
-before_size = b.read(1024)
+#ERROR_FILEを開くためにエラー処理を行う
+
+if (os.path.exists(ERROR_FILE)):
+    f = open(ERROR_FILE,'rt')
+    message = f.read(1024)
+
+
+#ERRORテキストの大きさが書いてあるBEFORE_SIZEの
+#有無を調べる→ない場合は0
+if (os.path.exists(BEFORE_SIZE)):
+    b = open(BEFORE_SIZE,'rt')
+    before_size = b.read(1024)
+
+else:
+    before_size=0
+    print('before_size:',before_size)
+
+
+if before_size=='':
+    before_size=0
 before_size = int(before_size)
 print(before_size)
 print(type(before_size))
@@ -49,13 +65,8 @@ else:
         sys.exit()
 
     print('Sending...')
-    message = f.read(1024)
-    data = message+'IP:'+ip
-"""
-IPアドレスを送っていいのか?
-ほかに方法はあるのか????
-"""
 
+    data = message+'IP:'+ip
     client.sendall(str(data).encode('utf-8'))
     print("Done Sending")
 
