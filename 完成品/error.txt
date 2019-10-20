@@ -1,0 +1,4 @@
+  File "dummy.py", line 3
+    print 'oooo'
+               ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print('oooo')?

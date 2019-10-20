@@ -1,31 +1,33 @@
+
 import sys
 import os
 ERROR_FILE = './error.txt'
-#BEFORE_SIZE = './BEFORE_SIZE.txt'
-BEFOR_SIZE = []
+BEFORE_SIZE = './BEFORE_SIZE.txt'
+
 #socket通信用
 import socket
 import sys
 
-HOST = 'localhost'
+HOST = '34.84.0.43'
 PORT = 50000
 BUFSIZE = 4096 #受信バッファの大きさ
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+before_size=[]
+before_size[0]=0
 #ERROR_FILEを開くためにエラー処理を行う
 
 if (os.path.exists(ERROR_FILE)):
     f = open(ERROR_FILE,'rt')
     message = f.read(1024)
 
-
 #ERRORテキストの大きさが書いてあるBEFORE_SIZEの
 #有無を調べる→ない場合は0
-#if (os.path.exists(BEFORE_SIZE)):
-#    b = open(BEFORE_SIZE,'rt')
-#    before_size = b.read(1024)
-
-if
+"""
+if (os.path.exists(BEFORE_SIZE)):
+    b = open(BEFORE_SIZE,'rt')
+    before_size = b.read(1024)
+"""
+=
 else:
     before_size=0
     print('before_size:',before_size)
@@ -39,7 +41,7 @@ print(type(before_size))
 
 #ipアドレス
 
-ip = socket.gethostbyname(HOST) ##ユーザーのipアドレス
+ip = socket.gethostbyname(socket.gethostname()) ##ユーザーのipアドレス
 
 #client.close()
 
@@ -61,6 +63,9 @@ else:
     try:
         #サーバとの接続
         client.connect((HOST,PORT))
+    except TypeError as e:
+        print(e)
+
     except:
         print('接続できませんでした')
         sys.exit()
